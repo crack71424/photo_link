@@ -25,6 +25,9 @@
 
   <body>
     <div class="container">
+      <div class='top-wrapper'>
+          <%= render 'layouts/header' %>
+        </div>
       <!-- IF構文を使ってログインしている場合などでnavとかつける-->
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
