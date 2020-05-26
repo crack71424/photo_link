@@ -26,13 +26,16 @@
   <body>
     <div class="container">
       <!-- IF構文を使ってログインしている場合などでnavとかつける-->
-    
-    <%= yield %>
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
+      <%= yield %>
     
     <footer>
       <!-- お問い合わせ -->
     </footer>
     
+     <%= debug(params) if Rails.env.development? %>
     </div>
   </body>
 </html>
