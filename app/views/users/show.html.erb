@@ -1,5 +1,9 @@
-<% provide(:title, @user.name) %>
+
 <div class="row">
+  <% if @user.avatar.attached? %>
+    <%= image_tag @user.avatar, size: '150x150', class: "image-fit" %>
+  <% end %>
+  
   <aside class="col-md-4">
     <section class="user_info">
       <h1>
