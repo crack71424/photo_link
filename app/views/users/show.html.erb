@@ -1,4 +1,3 @@
-
 <div class="row">
   <% if @user.avatar.attached? %>
     <%= image_tag @user.avatar, size: '150x150', class: "image-fit" %>
@@ -12,4 +11,13 @@
       </h1>
     </section>
   </aside>
+  
+  <div class="col-md-8">
+    <% if @user.posts.any? %>
+      <h3>Microposts (<%= @user.posts.count %>)</h3>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+    <% end %>
+  </div>
 </div>

@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.limit(10).order(id: :desc)
   end
   
   def create
@@ -27,7 +28,7 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if @user.update(user_params) #update_attributeからの変更
       flash[:success] = "Profile updated"
       redirect_to @user
     else
@@ -41,16 +42,10 @@ class UsersController < ApplicationController
       params.require(:user).permit(:avatar, :name, :email, :profile, :password, :password_confirmation)
     end
     
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
-    
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
+    
+    
 end

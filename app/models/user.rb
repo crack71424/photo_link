@@ -10,6 +10,13 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   
   has_one_attached :avatar
+  has_many :posts, dependent: :destroy
+  
+  # 試作feedの定義
+  # 完全な実装は次章の「ユーザーをフォローする」を参照
+  def feed
+    Post.where("user_id = ?", id)
+  end
 
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)

@@ -1,6 +1,28 @@
+<% if logged_in? %>
+<div class='text-center'>
+    <%= image_tag current_user.avatar, size: '75x75', class: 'avatar' if current_user.avatar.attached?%>
+    <p style="color:#FFFFFF"><%= current_user.name %></p>
+  </div>
+  <div class="row">
+    <aside class="col-md-4">
+      <section class="user_info">
+        <%= render 'shared/user_info' %>
+      </section>
+      <section class="post_form">
+        <%= render 'shared/post_form' %>
+      </section>
+    </aside>
+    <div class="col-md-8">
+      <h3>Post Feed投稿一覧</h3>
+      <%= render 'shared/feed' %>
+    </div>
+  </div>
+<% else %>
+
 <h1>PHOTO LINK</h1>
 <p>カメラマンと被写体の為のマッチングアプリ</p>
 
 <div>
     <%= link_to "Sign up now", signup_path %>
 </div>
+<% end %>
