@@ -8,7 +8,7 @@ gem 'rails'
 # Use sqlite3 as the database for Active Record
 #新しく追加したGEM達
 gem 'bcrypt', '~> 3.1.7'
-gem "bootstrap-sass", "~>3.3.6"
+gem "bootstrap-sass", "~>3.4.1"
 gem 'jquery-rails'
 gem 'rails-controller-testing'
 
