@@ -3,6 +3,12 @@
     <%= image_tag @user.avatar, size: '150x150', class: "image-fit" %>
   <% end %>
   
+  <p><%= @user.name %></p>
+  
+ <% if logged_in? && current_user.id != @user.id %>
+    <%= render 'relationships/follow_button', user: @user %>
+  <% end %>
+  
   <aside class="col-md-4">
     <section class="user_info">
       <h1>

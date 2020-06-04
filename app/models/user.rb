@@ -12,20 +12,22 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
   
+  has_many :relationships
+  has_many :followings, through: :relationships, source: :follow #userモデルと紐ずけ
+  has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
+  has_many :followers, through: :reverses_of_relationship, source: :user
+  
   # 試作feedの定義
-  # 完全な実装は次章の「ユーザーをフォローする」を参照
   def feed
     Post.where("user_id = ?", id)
   end
 
-  # 渡された文字列のハッシュ値を返す
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
-  # ランダムなトークンを返す
   def User.new_token
     SecureRandom.urlsafe_base64
   end
@@ -46,4 +48,22 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+  
+  #ユーザーフォロー
+  def follow(other_user)
+    unless self == other_user
+    self.relationships.find_or_create_by(follow_id: other_user.id)
+    end
+  end
+  
+  def unfollow(other_user)
+    relationships = self.relationships.find_by(follow_id: other_user.id)
+    relationships.destroy if relationships
+  end
+  
+  def following?(other_user)
+    self.followings.include?(other_user)
+  end
+  
+  
 end

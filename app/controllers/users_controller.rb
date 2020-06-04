@@ -47,5 +47,16 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user?(@user)
     end
     
+    def followings
+      @user = User.find(params[:id])
+      @followings = @user.followings.page(params[:page])
+    end
+  
+    def followers
+      @user = User.find(params[:id])
+      #@followers = @user.followers.page(params[:page])
+      @followers = @user.followers.where.not(id: @user.followings.ids).page(params[:page])
+    end
+    
     
 end
