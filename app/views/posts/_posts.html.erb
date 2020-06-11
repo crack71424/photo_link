@@ -1,0 +1,19 @@
+<ul class="list-unstyled">
+  <% posts.each do |post| %>
+    <li class="media mb-3 tweet">
+      
+      <%= image_tag post.user.avatar, size: '50x50', class: 'avatar' if post.user.avatar.attached? %>
+      <div class="media-body">
+        <div>
+          <a href="<%= user_path(post.user) %>"><%= post.user.name %></a>
+          <% if current_user == post.user %>
+            <%= link_to "delete", post_path(post), method: :delete, data: {confirm: "削除してよろしいですか？"} %>
+          <% end %>
+        </div>
+        <div>
+          <p class="posts-content"><%= post.content.gsub(/\r\n|\r|\n/, "<br>").html_safe %></p>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>

@@ -22,7 +22,7 @@
     <% if @user.posts.any? %>
       <h3>Microposts (<%= @user.posts.count %>)</h3>
       <ol class="posts">
-        <%= render @posts %>
+        <%= render 'posts/posts', posts: @posts %>
       </ol>
     <% end %>
   </div>
