@@ -11,9 +11,12 @@ Rails.application.routes.draw do
     member do
       get :followings
       get :followers
+      get :add_tag
     end
   end
   
   resources :posts, only: [:create, :destroy, :index]
   resources :relationships, only: [:create, :destroy]
+  resources :tags, only: [:index, :show, :create, :destroy]
+  resources :tag_relations, only: [:create, :destroy]
 end

@@ -11,6 +11,10 @@ class User < ApplicationRecord
   
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
+  has_many :tags, dependent: :destroy
+  has_many :tag_relations
+  has_many :adding_tags, through: :tag_relations, source: :tag
+  
   
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow #userモデルと紐ずけ
@@ -63,6 +67,26 @@ class User < ApplicationRecord
   
   def following?(other_user)
     self.followings.include?(other_user)
+  end
+  
+  #def add_tag
+    #@user = User.find_by(params[:id])
+    #@adding = @user.adding_tags
+  #end
+  
+  def adding(tag)
+    unless self.tag_relations.include?(tag)
+      self.tag_relations.find_or_create_by(tag_id: tag.id)
+    end
+  end
+  
+  def adding?(tag)
+    self.adding_tags.include?(tag)
+  end
+  
+  def remove(tag)
+    delete_tag = self.tag_relations.find_by(tag_id: tag.id)
+    delete_tag.destroy if delete_tag
   end
   
   
